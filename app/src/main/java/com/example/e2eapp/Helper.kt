@@ -14,21 +14,25 @@ import java.io.IOException
 val Context.dataStore by preferencesDataStore(name = "Email")
 val SENDER_KEY = stringPreferencesKey("sender")
 
-suspend fun saveValueToStore(context: Context, value: String) {
+suspend fun saveValueToStore(
+    context: Context,
+    value: String,
+) {
     context.dataStore.edit { prefs ->
         prefs[SENDER_KEY] = value
     }
 }
 
 // Fixed: Removed 'suspend' and corrected return type to Flow
-fun getValueFromStore(context: Context, key: Preferences.Key<String>): Flow<String?> {
-    return context.dataStore.data
+fun getValueFromStore(
+    context: Context,
+    key: Preferences.Key<String>,
+): Flow<String?> =
+    context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 emit(emptyPreferences())
             } else {
                 throw exception
             }
-        }
-        .map { it[key] }
-}
+        }.map { it[key] }

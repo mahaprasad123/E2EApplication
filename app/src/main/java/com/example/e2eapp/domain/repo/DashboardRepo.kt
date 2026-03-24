@@ -1,6 +1,5 @@
 package com.example.e2eapp.domain.repo
 
-
 import com.example.e2eapp.domain.dto.DashboardEmailData
 import kotlinx.coroutines.flow.Flow
 

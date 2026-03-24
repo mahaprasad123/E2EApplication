@@ -11,19 +11,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewmodel @Inject constructor(
-    private val dashboardUseCase: DashboardUseCase
-) : ViewModel() {
+class DashboardViewmodel
+    @Inject
+    constructor(
+        private val dashboardUseCase: DashboardUseCase,
+    ) : ViewModel() {
+        private var _dashboardData = MutableStateFlow<List<DashboardEmailData>>(emptyList())
+        val dashboardData = _dashboardData.asStateFlow()
 
-    private var _dashboardEmailData = MutableStateFlow<List<DashboardEmailData>>(emptyList())
-    val dashboardData = _dashboardEmailData.asStateFlow()
-
-    fun getDashboardDataFromCloud() {
-        viewModelScope.launch {
-            // Assuming your use case has a method to invoke or get data
-            dashboardUseCase.getDashboardUseCase().collect {
-                _dashboardEmailData.value = it
+        fun getDashboardDataFromCloud() {
+            viewModelScope.launch {
+                // Assuming your use case has a method to invoke or get data
+                dashboardUseCase.getDashboardUseCase().collect {
+                    _dashboardData.value = it
+                }
             }
         }
     }
-}

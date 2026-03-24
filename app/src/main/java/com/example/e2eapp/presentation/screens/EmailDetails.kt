@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -19,15 +18,19 @@ import com.example.e2eapp.getValueFromStore
 import com.example.e2eapp.navigation.LocalNavController
 
 @Composable
-fun EmailDetails(id: Int?, modifier: Modifier) {
+fun EmailDetails(
+    id: Int?,
+    modifier: Modifier,
+) {
     val controller = LocalNavController.current
     val context = LocalContext.current
     val name by getValueFromStore(context, SENDER_KEY).collectAsState("name")
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Color.LightGray),
-        contentAlignment = Alignment.Center
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(Color.LightGray),
+        contentAlignment = Alignment.Center,
     ) {
         Text(text = name ?: "Error", fontWeight = FontWeight.Bold)
     }

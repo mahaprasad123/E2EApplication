@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.e2eapp.presentation.screens.Dashboard
 import com.example.e2eapp.presentation.screens.EmailDetails
 import com.example.e2eapp.presentation.viewmodel.DashboardViewmodel
@@ -21,7 +20,7 @@ fun InitNavigation(viewmodel: DashboardViewmodel) {
             val id = it.arguments?.getString("id")?.toInt()
             EmailDetails(
                 id,
-                modifier = Modifier
+                modifier = Modifier,
             )
         }
     }
@@ -33,8 +32,9 @@ sealed interface Screen {
     object Dashboard : Screen
 
     @Serializable
-    class Details(val id: String) : Screen
+    class Details(
+        val id: String,
+    ) : Screen
 }
 
 val LocalNavController = compositionLocalOf<NavHostController> { error("no nav controller") }
-

@@ -17,25 +17,25 @@ import javax.inject.Singleton
 @Module
 class RetrofitModule {
     private val json = Json { ignoreUnknownKeys = true }
-    val BASE_URL = "https://66e4784bd2405277ed14692e.mockapi.io/api/v1/"
+
+    companion object {
+        const val BASE_URL = "https://66e4784bd2405277ed14692e.mockapi.io/api/v1/"
+    }
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl(BASE_URL)
+    fun provideRetrofit(): Retrofit =
+        Retrofit
+            .Builder()
+            .baseUrl(BASE_URL)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
-    }
 
     @Provides
     @Singleton
-    fun provideIDashboardNetwork(retrofit: Retrofit): IDashboardNetwork {
-        return retrofit.create(IDashboardNetwork::class.java)
-    }
+    fun provideIDashboardNetwork(retrofit: Retrofit): IDashboardNetwork = retrofit.create(IDashboardNetwork::class.java)
 
     @Provides
     @Singleton
-    fun provideDashboardRepo(iDashboardNetwork: IDashboardNetwork): DashboardRepo {
-        return DashboardRepoImpl(iDashboardNetwork)
-    }
+    fun provideDashboardRepo(iDashboardNetwork: IDashboardNetwork): DashboardRepo = DashboardRepoImpl(iDashboardNetwork)
 }

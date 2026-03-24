@@ -1,6 +1,5 @@
 package com.example.e2eapp.presentation.screens
 
-import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,14 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -50,13 +45,16 @@ import com.example.e2eapp.saveValueToStore
 import kotlinx.coroutines.launch
 
 @Composable
-fun Dashboard(viewmodel: DashboardViewmodel, modifier: Modifier) {
+fun Dashboard(
+    viewmodel: DashboardViewmodel,
+    modifier: Modifier,
+) {
     LaunchedEffect(Unit) {
         viewmodel.getDashboardDataFromCloud()
     }
     val list by viewmodel.dashboardData.collectAsState()
 
-    ////////////testing codes//////////////
+    // //////////testing codes//////////////
     val listId = mutableListOf<String>()
     val listEmail = mutableListOf<String>()
     val listFinal = mutableListOf<TestFlatmap>()
@@ -67,94 +65,103 @@ fun Dashboard(viewmodel: DashboardViewmodel, modifier: Modifier) {
     }
     Log.d("MPC-Greeting", "updatedList=$listFinal")
 
-    val emails = listFinal.flatMap {
-        it.email
-    }
+    val emails =
+        listFinal.flatMap {
+            it.email
+        }
     Log.d("MPC-Greeting", "emails=$emails")
-    //////////end of test/////////////////
+    // ////////end of test/////////////////
 
-    if (list.isEmpty())
+    if (list.isEmpty()) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0x4D000000)), Alignment.Center
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(Color(0x4D000000)),
+            Alignment.Center,
         ) {
             Text("Loading...Please wait")
         }
+    }
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     LazyColumn(modifier = modifier.fillMaxSize()) {
         itemsIndexed(list) { index, item ->
             val controller = LocalNavController.current
             /*
-            *****
-            *****UI Starts from here
-            *****
+             *****
+             *****UI Starts from here
+             *****
              */
             Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(10.dp, 10.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(80.dp)
+                        .padding(10.dp, 10.dp),
             ) {
-
                 Row(
-                    modifier = Modifier
-                        .padding(horizontal = 10.dp)
-                        .weight(1f)
-                        .clickable {
-                            scope.launch {
-                                saveValueToStore(context, item.from)
-                                controller.navigate(Screen.Details(item.id))
-                            }
-                        },
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 10.dp)
+                            .weight(1f)
+                            .clickable {
+                                scope.launch {
+                                    saveValueToStore(context, item.from)
+                                    controller.navigate(Screen.Details(item.id))
+                                }
+                            },
                     horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     AsyncImage(
                         model = item.profileImage,
                         contentDescription = null,
-                        modifier = Modifier
-                            .padding(5.dp)
-                            .clip(CircleShape)
-                            .weight(.15f)
-                            .background(Color.Cyan),
-                        contentScale = ContentScale.Fit
-
-
+                        modifier =
+                            Modifier
+                                .padding(5.dp)
+                                .clip(CircleShape)
+                                .weight(.15f)
+                                .background(Color.Cyan),
+                        contentScale = ContentScale.Fit,
                     )
                     Spacer(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(15.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxHeight()
+                                .width(15.dp),
                     )
                     Column(modifier = Modifier.weight(if (item.hasAttachment) .75f else .85f)) {
                         Text(
                             text = item.from,
                             fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
                         )
                         Text(
                             text = item.subject,
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Medium,
                             overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
+                            maxLines = 1,
                         )
                     }
-                    if (item.hasAttachment)
+                    if (item.hasAttachment) {
                         Image(
                             painter = painterResource(R.drawable.attachment),
                             contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.1f)
-                                .padding(10.dp)
+                            modifier =
+                                Modifier
+                                    .weight(0.1f)
+                                    .padding(10.dp),
                         )
+                    }
                 }
-
             }
         }
     }
 }
 
-data class TestFlatmap(val rIdList: List<String>, val email: List<String>)
+data class TestFlatmap(
+    val rIdList: List<String>,
+    val email: List<String>,
+)

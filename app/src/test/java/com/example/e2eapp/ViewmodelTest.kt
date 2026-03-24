@@ -20,14 +20,15 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ViewmodelTest {
-
     private lateinit var viewmodel: DashboardViewmodel
     private val dashboardUseCase = mockk<DashboardUseCase>()
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setup() {
-        Dispatchers.setMain(testDispatcher) // This is required as ourViewmodelscope runs in Dispatchers.Main, but our JVM based UT runs in Dispatchers.Unconfined
+        Dispatchers.setMain(testDispatcher)
+        // This is required as ourViewmodelscope runs in Dispatchers.Main,
+        // but our JVM based UT runs in Dispatchers.Unconfined
         viewmodel = DashboardViewmodel(dashboardUseCase)
     }
 
@@ -37,20 +38,31 @@ class ViewmodelTest {
     }
 
     @Test
-    fun checkDashboardData() = runTest(testDispatcher) {
-        // Given
-        val mockData = listOf(
-            DashboardEmailData("1", "Mahi", "test", "test", "test", "test", false)
-        )
-        coEvery { dashboardUseCase.getDashboardUseCase() } returns flowOf(mockData)
+    fun checkDashboardData() =
+        runTest(testDispatcher) {
+            // Given
 
-        // When
-        viewmodel.getDashboardDataFromCloud()
-        advanceUntilIdle()
+            val mockData =
+                listOf(
+                    DashboardEmailData(
+                        "1",
+                        "Mahi",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        false,
+                    ),
+                )
+            coEvery { dashboardUseCase.getDashboardUseCase() } returns flowOf(mockData)
 
-        // Then
-        coVerify { dashboardUseCase.getDashboardUseCase() }
-        assert(viewmodel.dashboardData.value.isNotEmpty())
-        assert(viewmodel.dashboardData.value[0].from == "Mahi")
-    }
+            // When
+            viewmodel.getDashboardDataFromCloud()
+            advanceUntilIdle()
+
+            // Then
+            coVerify { dashboardUseCase.getDashboardUseCase() }
+            assert(viewmodel.dashboardData.value.isNotEmpty())
+            assert(viewmodel.dashboardData.value[0].from == "Mahi")
+        }
 }

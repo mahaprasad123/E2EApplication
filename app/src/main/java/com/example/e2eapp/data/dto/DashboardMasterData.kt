@@ -12,13 +12,14 @@ data class DashboardMasterData(
     val timestamp: Long,
     val isImportant: Boolean,
     val isPromotional: Boolean,
-    val hasAttachments: Boolean
+    val hasAttachments: Boolean,
 )
+
 @Serializable
 data class Payload(
     val from: String,
     val email: String,
     val subject: String,
     val date: String,
-    val profileImage: String
+    val profileImage: String,
 )

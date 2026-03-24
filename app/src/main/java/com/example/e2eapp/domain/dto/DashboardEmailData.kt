@@ -7,5 +7,5 @@ data class DashboardEmailData(
     val body: String,
     val profileImage: String,
     val date: String,
-    val hasAttachment: Boolean
+    val hasAttachment: Boolean,
 )
