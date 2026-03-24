@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.e2eapp.domain.dto.DashboardEmailData
 import com.example.e2eapp.domain.usecase.DashboardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewmodel

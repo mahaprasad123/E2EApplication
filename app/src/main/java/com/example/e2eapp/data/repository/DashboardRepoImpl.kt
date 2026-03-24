@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.e2eapp.data.network.IDashboardNetwork
 import com.example.e2eapp.domain.dto.DashboardEmailData
 import com.example.e2eapp.domain.repo.DashboardRepo
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -11,7 +12,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import javax.inject.Inject
 
 class DashboardRepoImpl
     @Inject
