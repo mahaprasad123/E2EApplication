@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -5,6 +7,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -96,13 +99,23 @@ dependencies {
     // MockK
     testImplementation(libs.mockk)
     androidTestImplementation(libs.mockk.android)
+
+    // Detekt
+    detektPlugins(libs.detekt.rules.compose)
+    detektPlugins(libs.detekt.formatting)
 }
 
 ktlint {
     android = true
     ignoreFailures = false
     reporters {
-        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
-        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.CHECKSTYLE)
     }
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config.setFrom(files("$rootDir/detekt-rules.yml"))
 }
