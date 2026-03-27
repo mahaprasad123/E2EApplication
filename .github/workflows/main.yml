@@ -67,7 +67,7 @@ jobs:
                 uses: android-actions/setup-android@v3
 
             -   name: Run instrumentation tests
-                run: ./gradlew connectedCheck
+                run: ./gradlew managedDeviceAndroidTest
 
             -   name: Upload test report
                 uses: actions/upload-artifact@v4
