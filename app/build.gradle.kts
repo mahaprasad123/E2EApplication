@@ -40,6 +40,19 @@ android {
     buildFeatures {
         compose = true
     }
+//if you are not adding below codes here, you have to create a device in yml file for CI
+// but best option is to add here
+    testOptions {
+        managedDevices {
+            localDevices {
+                create("pixel9Api34") {
+                    device = "Pixel 9"
+                    apiLevel = 34
+                    systemImageSource = "google"
+                }
+            }
+        }
+    }
 }
 
 dependencies {
