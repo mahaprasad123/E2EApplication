@@ -25,22 +25,61 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
+    sourceSets {
+        getByName("debug") {
+            java.directories.add("src/debug/java")
+            java.directories.add("src/debug/kotlin")
+        }
+        getByName("release") {
+            java.directories.add("src/release/java")
+            java.directories.add("src/release/kotlin")
+        }
+    }
+
+    flavorDimensions += "env"
+
+    productFlavors {
+        create("QA") {
+            dimension = "env"
+            applicationIdSuffix = ".qa"
+            versionNameSuffix = "-qa"
+            buildConfigField("String", "BASE_URL", "\"https://qa.e2e.com/\"")
+        }
+        create("Staging") {
+            dimension = "env"
+            applicationIdSuffix = ".stg"
+            versionNameSuffix = "-staging"
+            buildConfigField("String", "BASE_URL", "\"https://staging.e2e.com/\"")
+        }
+        create("Prod") {
+            dimension = "env"
+            buildConfigField("String", "BASE_URL", "\"https://prod.e2e.com/\"")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
-//if you are not adding below codes here, you have to create a device in yml file for CI
+// if you are not adding below codes here, you have to create a device in yml file for CI
 // but best option is to add here
     testOptions {
         managedDevices {
