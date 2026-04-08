@@ -146,7 +146,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.2.1")
     implementation("androidx.datastore:datastore:1.2.1")
     // If using Proto DataStore, you also need protobuf
-    implementation("com.google.protobuf:protobuf-javalite:4.34.0")
+    implementation("com.google.protobuf:protobuf-javalite:4.34.1")
 
     // MockK
     testImplementation(libs.mockk)
@@ -155,6 +155,8 @@ dependencies {
     // Detekt
     detektPlugins(libs.detekt.rules.compose)
     detektPlugins(libs.detekt.formatting)
+
+    implementation(libs.androidx.compose.material.icons.extended)
 }
 
 ktlint {
