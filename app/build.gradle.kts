@@ -87,89 +87,89 @@ android {
                 create("pixel9Api34") {
                     device = "Pixel 9"
                     apiLevel = 34
-                    systemImageSource = "google"
+                    systemImageSource = "aosp-atd"
                 }
             }
         }
     }
 }
 
-dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    dependencies {
+        implementation(libs.androidx.core.ktx)
+        implementation(libs.androidx.lifecycle.runtime.ktx)
+        implementation(libs.androidx.activity.compose)
+        implementation(platform(libs.androidx.compose.bom))
+        implementation(libs.androidx.compose.ui)
+        implementation(libs.androidx.compose.ui.graphics)
+        implementation(libs.androidx.compose.ui.tooling.preview)
+        implementation(libs.androidx.compose.material3)
+        testImplementation(libs.junit)
+        androidTestImplementation(libs.androidx.junit)
+        androidTestImplementation(libs.androidx.espresso.core)
+        androidTestImplementation(platform(libs.androidx.compose.bom))
+        androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+        debugImplementation(libs.androidx.compose.ui.tooling)
+        debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    // ViewModel and Lifecycle (Flow support is included in lifecycle-runtime-compose)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.lifecycle.runtime.compose) // For collectAsStateWithLifecycle
+        // ViewModel and Lifecycle (Flow support is included in lifecycle-runtime-compose)
+        implementation(libs.androidx.lifecycle.viewmodel.ktx)
+        implementation(libs.androidx.lifecycle.viewmodel.compose)
+        implementation(libs.androidx.lifecycle.runtime.compose) // For collectAsStateWithLifecycle
 
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.core)
-    // Coroutines testing
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+        // Coroutines
+        implementation(libs.kotlinx.coroutines.core)
+        // Coroutines testing
+        testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+        androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
 
-    // Networking & Serialization
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.kotlinx.serialization)
-    implementation(libs.kotlinx.serialization.json)
+        // Networking & Serialization
+        implementation(libs.retrofit)
+        implementation(libs.retrofit.kotlinx.serialization)
+        implementation(libs.kotlinx.serialization.json)
 
-    // Navigation serialization
-    implementation(libs.androidx.navigation.compose)
+        // Navigation serialization
+        implementation(libs.androidx.navigation.compose)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
-    // Hilt testing
-    androidTestImplementation(libs.hilt.android.testing)
-    kspAndroidTest(libs.hilt.compiler)
+        // Hilt
+        implementation(libs.hilt.android)
+        ksp(libs.hilt.compiler)
+        implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
+        // Hilt testing
+        androidTestImplementation(libs.hilt.android.testing)
+        kspAndroidTest(libs.hilt.compiler)
 
-    // Coil
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network)
+        // Coil
+        implementation(libs.coil.compose)
+        implementation(libs.coil.network)
 
-    // DataStore
-    implementation("androidx.datastore:datastore-preferences:1.2.1")
-    implementation("androidx.datastore:datastore:1.2.1")
-    // If using Proto DataStore, you also need protobuf
-    implementation("com.google.protobuf:protobuf-javalite:4.34.1")
+        // DataStore
+        implementation("androidx.datastore:datastore-preferences:1.2.1")
+        implementation("androidx.datastore:datastore:1.2.1")
+        // If using Proto DataStore, you also need protobuf
+        implementation("com.google.protobuf:protobuf-javalite:4.34.1")
 
-    // MockK
-    testImplementation(libs.mockk)
-    androidTestImplementation(libs.mockk.android)
+        // MockK
+        testImplementation(libs.mockk)
+        androidTestImplementation(libs.mockk.android)
 
-    // Detekt
-    detektPlugins(libs.detekt.rules.compose)
-    detektPlugins(libs.detekt.formatting)
+        // Detekt
+        detektPlugins(libs.detekt.rules.compose)
+        detektPlugins(libs.detekt.formatting)
 
-    implementation(libs.androidx.compose.material.icons.extended)
-}
-
-ktlint {
-    android = true
-    ignoreFailures = false
-    reporters {
-        reporter(ReporterType.PLAIN)
-        reporter(ReporterType.CHECKSTYLE)
+        implementation(libs.androidx.compose.material.icons.extended)
     }
-}
 
-detekt {
-    buildUponDefaultConfig = true
-    allRules = false
-    config.setFrom(files("$rootDir/detekt-rules.yml"))
-}
+    ktlint {
+        android = true
+        ignoreFailures = false
+        reporters {
+            reporter(ReporterType.PLAIN)
+            reporter(ReporterType.CHECKSTYLE)
+        }
+    }
+
+    detekt {
+        buildUponDefaultConfig = true
+        allRules = false
+        config.setFrom(files("$rootDir/detekt-rules.yml"))
+    }
