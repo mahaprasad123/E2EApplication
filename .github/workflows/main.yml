@@ -25,7 +25,7 @@ jobs:
                 run: chmod +x gradlew
 
             -   name: Run Lint
-                run: ./gradlew lintDebug
+                run: ./gradlew lintProdDebug
 
             -   name: Upload html test report
                 if: always()
@@ -45,7 +45,7 @@ jobs:
                 run: chmod +x gradlew
 
             -   name: Run tests
-                run: ./gradlew test
+                run: ./gradlew testProdDebugUnitTest
 
             -   name: Upload test report
                 uses: actions/upload-artifact@v4
@@ -67,7 +67,7 @@ jobs:
                 uses: android-actions/setup-android@v3
 
             -   name: Run instrumentation tests
-                run: ./gradlew managedDeviceAndroidTest
+                run: ./gradlew :app:pixel9Api34ProdDebugAndroidTest
 
             -   name: Upload test report
                 uses: actions/upload-artifact@v4
