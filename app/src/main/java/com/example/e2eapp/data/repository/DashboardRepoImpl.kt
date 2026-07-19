@@ -1,7 +1,7 @@
 package com.example.e2eapp.data.repository
 
 import android.util.Log
-import com.example.e2eapp.data.network.IDashboardNetwork
+import com.example.e2eapp.data.network.IDashboardService
 import com.example.e2eapp.domain.dto.DashboardEmailData
 import com.example.e2eapp.domain.repo.DashboardRepo
 import javax.inject.Inject
@@ -16,11 +16,11 @@ import kotlinx.coroutines.flow.onStart
 class DashboardRepoImpl
     @Inject
     constructor(
-        val iDashboardNetwork: IDashboardNetwork,
+        val iDashboardService: IDashboardService,
     ) : DashboardRepo {
         override suspend fun getDashboardDetails(): Flow<List<DashboardEmailData>> =
             flowOf(
-                iDashboardNetwork
+                iDashboardService
                     .getDashboardDataFromCloud()
                     .map {
                         DashboardEmailData(

@@ -17,9 +17,14 @@ fun InitNavigation(viewmodel: DashboardViewmodel) {
     NavHost(navController = navController, startDestination = Screen.Dashboard) {
         composable<Screen.Dashboard> { Dashboard(viewmodel, Modifier) }
         composable<Screen.Details> {
-            val id = it.arguments?.getString("id")?.toInt()
+            val id =
+                it.arguments?.getString("id")?.let { idStr ->
+                    idStr.toIntOrNull() ?: idStr.toIntOrNull(16)
+                }
+            val message = it.arguments?.getString("body") ?: "DUMMY"
             EmailDetails(
                 id,
+                message,
                 modifier = Modifier,
             )
         }
@@ -34,6 +39,7 @@ sealed interface Screen {
     @Serializable
     class Details(
         val id: String,
+        val body: String,
     ) : Screen
 }
 

@@ -11,19 +11,23 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-val Context.dataStore by preferencesDataStore(name = "Email")
+// Renamed to avoid potential directory conflicts if "Email" was corrupted
+val Context.dataStore by preferencesDataStore(name = "user_email_prefs")
 val SENDER_KEY = stringPreferencesKey("sender")
 
 suspend fun saveValueToStore(
     context: Context,
     value: String,
 ) {
-    context.dataStore.edit { prefs ->
-        prefs[SENDER_KEY] = value
+    try {
+        context.dataStore.edit { prefs ->
+            prefs[SENDER_KEY] = value
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
     }
 }
 
-// Fixed: Removed 'suspend' and corrected return type to Flow
 fun getValueFromStore(
     context: Context,
     key: Preferences.Key<String>,
@@ -36,3 +40,5 @@ fun getValueFromStore(
                 throw exception
             }
         }.map { it[key] }
+
+fun provideAPIKey() = "reqres_58bc88cc729a4e55b60044de1fe44f22"

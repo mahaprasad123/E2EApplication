@@ -55,12 +55,12 @@ class MainActivity : ComponentActivity() {
                                 IconButton(onClick = { showBottomSheet = true }) {
                                     Icon(
                                         imageVector = Icons.Default.Settings,
-                                        contentDescription = "Settings"
+                                        contentDescription = "Settings",
                                     )
                                 }
-                            }
+                            },
                         )
-                    }
+                    },
                 ) { innerPadding ->
                     Column(Modifier.padding(innerPadding)) {
                         InitNavigation(viewmodel)
@@ -69,13 +69,14 @@ class MainActivity : ComponentActivity() {
                     if (showBottomSheet) {
                         ModalBottomSheet(
                             onDismissRequest = { showBottomSheet = false },
-                            sheetState = sheetState
+                            sheetState = sheetState,
                         ) {
                             val details = DiagnosticsImpl().getDeviceDetails()
                             Column(
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .padding(bottom = 32.dp)
+                                modifier =
+                                    Modifier
+                                        .padding(16.dp)
+                                        .padding(bottom = 32.dp),
                             ) {
                                 Text(text = "Diagnostics", fontWeight = FontWeight.Bold)
                                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
