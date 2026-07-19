@@ -108,7 +108,7 @@ fun Dashboard(
                             .clickable {
                                 scope.launch {
                                     saveValueToStore(context, item.from)
-                                    controller.navigate(Screen.Details(item.id))
+                                    controller.navigate(Screen.Details(item.id, item.body))
                                 }
                             },
                     horizontalArrangement = Arrangement.Start,
